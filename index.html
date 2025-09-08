@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>❤️</title>
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+<style>
+body {
+  font-family: 'Patrick Hand', cursive;
+  text-align: center;
+  background: #ffe6f2;
+  margin: 0;
+  padding: 20px;
+  overflow-x: hidden;
+}
+h1 {
+  color: #cc0066;
+  font-size: 6vw;
+  margin-top: 20px;
+}
+.hearts {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 30px;
+  gap: 15px;
+  position: relative;
+}
+.heart {
+  width: 12vw;
+  max-width: 80px;
+  height: 12vw;
+  max-height: 80px;
+  cursor: pointer;
+  transform: scale(1);
+  transition: transform 0.3s ease, opacity 0.5s ease;
+  position: relative;
+}
+.heart-inner {
+  width: 100%;
+  height: 100%;
+  background: pink;
+  clip-path: polygon(50% 0%, 100% 35%, 80% 100%, 50% 75%, 20% 100%, 0% 35%);
+  border-radius: 50%;
+}
+.heart:hover {
+  transform: scale(1.3);
+}
+#message {
+  margin-top: 30px;
+  font-size: 4vw;
+  color: #333;
+  white-space: pre-line;
+  line-height: 1.8;
+  max-width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+}
+.sparkle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: hotpink;
+  border-radius: 50%;
+  opacity: 0.9;
+  pointer-events: none;
+  animation: sparkleAnim 1s forwards;
+}
+@keyframes sparkleAnim {
+  0% { transform: translate(0,0) scale(1); opacity: 0.9; }
+  100% { transform: translate(var(--dx), var(--dy)) scale(0.5); opacity: 0; }
+}
+#kiss {
+  font-size: 8vw;
+  opacity: 0;
+  transition: opacity 1s ease;
+  margin: 20px auto 0;
+  display: block;
+  animation: bounce 1s ease infinite alternate;
+}
+@keyframes bounce {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-10px); }
+}
+</style>
+</head>
+<body>
+
+<h1>Tap the ❤️ to reveal</h1>
+
+<div class="hearts">
+  <div class="heart"><div class="heart-inner"></div></div>
+  <div class="heart"><div class="heart-inner"></div></div>
+  <div class="heart"><div class="heart-inner"></div></div>
+  <div class="heart"><div class="heart-inner"></div></div>
+  <div class="heart"><div class="heart-inner"></div></div>
+</div>
+
+<div id="message">
+Dear bujjukutty,  
+I'm really sorry da. ivlo naalah olunga pesama irunthathuku. naanum evlovo try pannen mudinja vara pesa ana mudila. nee evlo kastam pattu iruppanu enaku theriyum. naa oru loosu. im so so sorry. unna ipdi feel panna vachathuku. enakum oru maathiriyave irunthutu irunthuchu. guiltyah. ena da pesalaamnu nenaikurom ana thungite irukkenu. kaduppu aachu enaku en mela. ana etho nee purinjipa apdinu nenachitu konjam amaithiya irunthen.appaiyum manasu kekula. unkita pesama ipdi pannitu irukkeney nu guilty ah thaan irunthuchu. im so sorry. i love you so much.💋💋💋💋💋💋💋💋💋💋💋💋 naa iruppen unkuda kadasi varaikum. pesunaalum pesalanaalum you're always on my mind 24/7. un mela thuli kuda en love koraiyathu. epome.💋💋💋💋💋💋💋💋💋💋💋💋💋💋 nee ethukume feel pannatha da. ena stressah depressionah irunthalum enkita sollu. naa irukken unaku. i love you chellam.love you love you love you love you love you love you love you love you ummmmmmmmmmmaaaaaaaa ummmmmmmmmmmmmaaa ummmmmmmmmmmaaa.💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋 please manichiru.🙇‍♀️🙇‍♀️🙇‍♀️
+</div>
+
+<div id="kiss">💋</div>
+
+<script>
+const hearts = document.querySelectorAll('.heart');
+const kiss = document.getElementById('kiss');
+
+// Hearts floating + sparkles
+hearts.forEach(heart => {
+  heart.addEventListener('click', () => {
+    const drift = (Math.random() * 20 - 10) + "vw";
+    heart.style.transition = 'transform 1s ease, opacity 1s ease';
+    heart.style.transform = `translateY(-30vh) translateX(${drift}) scale(1.5)`;
+    heart.style.opacity = '0';
+    heart.style.pointerEvents = 'none';
+
+    const sparkleInterval = setInterval(() => {
+      for (let i = 0; i < 3; i++) {
+        const sparkle = document.createElement('div');
+        sparkle.classList.add('sparkle');
+        sparkle.style.left = (heart.getBoundingClientRect().left + heart.offsetWidth/2 + window.scrollX) + 'px';
+        sparkle.style.top = (heart.getBoundingClientRect().top + heart.offsetHeight/2 + window.scrollY) + 'px';
+        const dx = (Math.random() * 60 - 30) + 'px';
+        const dy = (Math.random() * -60 - 20) + 'px';
+        sparkle.style.setProperty('--dx', dx);
+        sparkle.style.setProperty('--dy', dy);
+        document.body.appendChild(sparkle);
+        setTimeout(() => sparkle.remove(), 1000);
+      }
+    }, 100);
+
+    setTimeout(() => clearInterval(sparkleInterval), 1000);
+  });
+});
+
+// Show kiss mark when page scrolled to bottom
+window.addEventListener('scroll', () => {
+  if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 10) {
+    kiss.style.opacity = 1;
+  }
+});
+</script>
+
+</body>
+</html>
