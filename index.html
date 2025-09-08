@@ -39,6 +39,7 @@ h1 {
   margin-left: auto;
   margin-right: auto;
   text-align: left;
+  display: none; /* hidden initially */
 }
 .sparkle {
   position: absolute;
@@ -88,11 +89,15 @@ I'm really sorry da. ivlo naalah olunga pesama irunthathuku. naanum evlovo try p
 
 <script>
 const hearts = document.querySelectorAll('.heart');
+const message = document.getElementById('message');
 const kiss = document.getElementById('kiss');
+
+let clickedCount = 0;
 
 // Hearts float + sparkles
 hearts.forEach(heart => {
   heart.addEventListener('click', () => {
+    // Float animation
     const driftX = (Math.random() * 100 - 50) + "px";
     heart.style.transition = 'transform 1s ease, opacity 1s ease';
     heart.style.transform = `translateY(-30vh) translateX(${driftX}) scale(2)`;
@@ -115,8 +120,14 @@ hearts.forEach(heart => {
         setTimeout(() => sparkle.remove(), 1000);
       }
     }, 100);
-
     setTimeout(() => clearInterval(sparkleInterval), 1000);
+
+    // Count clicks and show message after all 5 hearts
+    clickedCount++;
+    if (clickedCount === hearts.length) {
+      message.style.display = 'block';
+      message.scrollIntoView({behavior:'smooth'});
+    }
   });
 });
 
@@ -132,4 +143,3 @@ window.addEventListener('scroll', () => {
 
 </body>
 </html>
-
