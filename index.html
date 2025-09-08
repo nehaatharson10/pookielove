@@ -26,9 +26,110 @@ h1 {
   margin-top: 30px;
   gap: 15px;
   position: relative;
-  font-size: 8vw; /* for emoji size */
+  font-size: 8vw; /* emoji size */
   cursor: pointer;
 }
 #message {
   margin-top: 30px;
-  font-size: 4vw
+  font-size: 4vw;
+  color: #333;
+  white-space: pre-line;
+  line-height: 1.8;
+  max-width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+}
+.sparkle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: hotpink;
+  border-radius: 50%;
+  opacity: 0.9;
+  pointer-events: none;
+  animation: sparkleAnim 1s forwards;
+}
+@keyframes sparkleAnim {
+  0% { transform: translate(0,0) scale(1); opacity: 0.9; }
+  100% { transform: translate(var(--dx), var(--dy)) scale(0.5); opacity: 0; }
+}
+#kiss {
+  font-size: 8vw;
+  opacity: 0;
+  display: block;
+  margin: 20px auto 0;
+  transition: transform 1s ease, opacity 1s ease;
+}
+#kiss.animate {
+  transform: translateY(-50vh) scale(3);
+  opacity: 1;
+}
+</style>
+</head>
+<body>
+
+<h1>Tap the ❤️ to reveal</h1>
+
+<div class="hearts">
+  <span class="heart">❤️</span>
+  <span class="heart">❤️</span>
+  <span class="heart">❤️</span>
+  <span class="heart">❤️</span>
+  <span class="heart">❤️</span>
+</div>
+
+<div id="message">
+Dear bujjukutty,  
+I'm really sorry da. ivlo naalah olunga pesama irunthathuku. naanum evlovo try pannen mudinja vara pesa ana mudila. nee evlo kastam pattu iruppanu enaku theriyum. naa oru loosu. im so so sorry. unna ipdi feel panna vachathuku. enakum oru maathirive irunthutu irunthuchu. guiltyah. ena da pesalaamnu nenaikurom ana thungite irukkenu. kaduppu aachu enaku en mela. ana etho nee purinjipa apdinu nenachitu konjam amaithiya irunthen.appaiyum manasu kekula. unkita pesama ipdi pannitu irukkeney nu guilty ah thaan irunthuchu. im so sorry. i love you so much.💋💋💋💋💋💋💋💋💋💋💋💋 naa iruppen unkuda kadasi varaikum. pesunaalum pesalanaalum you're always on my mind 24/7. un mela thuli kuda en love koraiyathu. epome.💋💋💋💋💋💋💋💋💋💋💋💋💋💋 nee ethukume feel pannatha da. ena stressah depressionah irunthalum enkita sollu. naa irukken unaku. i love you chellam.love you love you love you love you love you love you love you love you ummmmmmmmmmmaaaaaaaa ummmmmmmmmmmmmaaa ummmmmmmmmmmaaa.💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋💋 please manichiru.🙇‍♀️🙇‍♀️🙇‍♀️
+</div>
+
+<div id="kiss">💋</div>
+
+<script>
+const hearts = document.querySelectorAll('.heart');
+const kiss = document.getElementById('kiss');
+
+// Hearts float + sparkles
+hearts.forEach(heart => {
+  heart.addEventListener('click', () => {
+    const driftX = (Math.random() * 100 - 50) + "px";
+    heart.style.transition = 'transform 1s ease, opacity 1s ease';
+    heart.style.transform = `translateY(-30vh) translateX(${driftX}) scale(2)`;
+    heart.style.opacity = '0';
+    heart.style.pointerEvents = 'none';
+
+    // Sparkles
+    const sparkleInterval = setInterval(() => {
+      for (let i = 0; i < 3; i++) {
+        const sparkle = document.createElement('div');
+        sparkle.classList.add('sparkle');
+        const rect = heart.getBoundingClientRect();
+        sparkle.style.left = (rect.left + rect.width/2 + window.scrollX) + 'px';
+        sparkle.style.top = (rect.top + rect.height/2 + window.scrollY) + 'px';
+        const dx = (Math.random() * 60 - 30) + 'px';
+        const dy = (Math.random() * -60 - 20) + 'px';
+        sparkle.style.setProperty('--dx', dx);
+        sparkle.style.setProperty('--dy', dy);
+        document.body.appendChild(sparkle);
+        setTimeout(() => sparkle.remove(), 1000);
+      }
+    }, 100);
+
+    setTimeout(() => clearInterval(sparkleInterval), 1000);
+  });
+});
+
+// Kiss mark animation when page scrolled to bottom
+let kissShown = false;
+window.addEventListener('scroll', () => {
+  if (!kissShown && (window.innerHeight + window.scrollY) >= document.body.offsetHeight - 10) {
+    kissShown = true;
+    kiss.classList.add('animate');
+  }
+});
+</script>
+
+</body>
+</html>
+
